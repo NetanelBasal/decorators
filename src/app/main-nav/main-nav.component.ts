@@ -11,6 +11,7 @@ import { Component, OnInit } from '@angular/core';
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-left">
             <li><a routerLink="/">Home</a></li>
+            <li><a routerLink="/posts">Posts</a></li>
             <li><a routerLink="/about">About</a></li>
           </ul>
         </div>

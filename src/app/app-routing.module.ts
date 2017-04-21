@@ -10,6 +10,10 @@ const routes : Routes = [
   {
     path: 'about',
     loadChildren: './about/about.module#AboutModule'
+  },
+  {
+    path: 'posts',
+    loadChildren: './posts-page/posts-page.module#PostsPageModule'
   }
 ];
 
