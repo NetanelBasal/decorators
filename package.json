@@ -8,7 +8,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "compodoc": "./node_modules/.bin/compodoc -p src/tsconfig.app.json --theme laravel"
   },
   "private": true,
   "dependencies": {
@@ -22,9 +23,10 @@
     "@angular/router": "^4.0.0",
     "@ngrx/core": "^1.2.0",
     "@ngrx/effects": "^2.0.3",
-    "@ngrx/store": "^2.2.1",
+    "@ngrx/store": "^2.2.2",
     "@ngrx/store-devtools": "^3.2.4",
     "core-js": "^2.4.1",
+    "ngrx-store-logger": "^0.1.7",
     "rxjs": "^5.1.0",
     "zone.js": "^0.8.4"
   },

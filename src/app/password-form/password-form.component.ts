@@ -11,6 +11,9 @@ import { Component, Input } from "@angular/core";
   `,
 })
 export class PasswordFormComponent {
+  /**
+   * The form group
+   */
   @Input('formGroup') group;
 
   get password() {
@@ -20,5 +23,6 @@ export class PasswordFormComponent {
   get confirm() {
     return this.group.get('confirm');
   }
+
 
 }

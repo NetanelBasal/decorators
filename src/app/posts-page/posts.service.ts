@@ -10,7 +10,7 @@ export class PostsService {
   constructor( private http : Http ) {
   }
 
-  getPosts() {
-    return this.http.get(this.URL);
+  get() {
+    return this.http.get(this.URL).toJSON();
   }
 }

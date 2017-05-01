@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Post } from "../posts.reducer";
+import { NgLog } from "../../angular-events-logger";
 
 @Component({
   selector: 'app-posts',
@@ -9,6 +10,7 @@ import { Post } from "../posts.reducer";
   `,
   styles: []
 })
+@NgLog()
 export class PostsComponent implements OnInit {
   @Input() posts : Post[] = [];
 

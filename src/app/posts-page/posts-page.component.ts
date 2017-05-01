@@ -3,6 +3,9 @@ import { Store } from "@ngrx/store";
 import { getPosts, Post } from "./posts.reducer";
 import { Observable } from "rxjs/Observable";
 import "rxjs/add/operator/pluck";
+import { NgLog } from "../angular-events-logger";
+import {  PageTracking } from "../visit-page";
+import { format } from "../prop";
 
 @Component({
   selector: 'app-posts-page',
@@ -12,11 +15,14 @@ import "rxjs/add/operator/pluck";
     </div>
   `
 })
+@PageTracking('blog')
+@NgLog()
 export class PostsPageComponent implements OnInit {
-  posts$ : Observable<Post[]>;
+  posts$ : Observable<Post[]> = this.store.select('posts').pluck('data')
+  @format
+  a: string = 'hello';
 
   constructor( private store : Store<any> ) {
-    this.posts$ = store.select('posts').pluck('data');
   }
 
   ngOnInit() {

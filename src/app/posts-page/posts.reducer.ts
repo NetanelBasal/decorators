@@ -21,7 +21,7 @@ const initialState : State = {
   error: null
 }
 
-export function reducer( state : State = initialState, action : Action ) : State {
+export function reducer( state : State = initialState, action: Action  ) : State {
   switch( action.type ) {
     case GET_POSTS:
       return { ...state, isFetching: true };

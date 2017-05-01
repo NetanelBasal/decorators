@@ -17,8 +17,8 @@ export class PostsEffects {
   @Effect() posts$ = this.actions$
     .ofType(GET_POSTS)
     .debounceTime(400)
-    .switchMap(payload => this.postsService.getPosts()
-      .map(res => getPostsSuccess(res.json()))
+    .switchMap(_ => this.postsService.get()
+      .map(posts => getPostsSuccess(posts))
       .catch(error => Observable.of(getPostsFail(error)))
     );
 }

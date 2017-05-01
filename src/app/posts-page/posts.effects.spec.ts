@@ -8,6 +8,8 @@ import { getPosts, getPostsFail, getPostsSuccess } from "app/posts-page/posts.re
 import { Observable } from "rxjs/Observable";
 
 describe('PostsEffects', () => {
+  let runner, postsEffects, postsService;
+
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
       EffectsTestingModule
@@ -16,29 +18,25 @@ describe('PostsEffects', () => {
       PostsEffects,
       {
         provide: PostsService,
-        useValue: jasmine.createSpyObj('postsService', ['getPosts'])
+        useValue: jasmine.createSpyObj('postsService', ['get'])
       }
     ]
   }));
 
-  function setup() {
-    return {
-      runner: TestBed.get(EffectsRunner),
-      postsEffects: TestBed.get(PostsEffects),
-      postsService: TestBed.get(PostsService)
-    }
-  }
+  beforeEach(() => {
+    runner = TestBed.get(EffectsRunner);
+    postsEffects = TestBed.get(PostsEffects);
+    postsService = TestBed.get(PostsService);
+  });
 
   describe('posts$', () => {
 
-    it('should retrun a GET_POSTS_SUCCESS action, on success', function () {
+    it('should return a GET_POSTS_SUCCESS action, on success', function () {
       const postsToReturn = [{ id: 1 }];
 
       const expectedResult = getPostsSuccess(postsToReturn);
 
-      const { postsService, postsEffects, runner } = setup();
-
-      postsService.getPosts.and.returnValue(Observable.of({ json: () => postsToReturn }));
+      postsService.get.and.returnValue(Observable.of(postsToReturn));
 
       runner.queue(getPosts());
       postsEffects.posts$.subscribe(result => {
@@ -46,28 +44,25 @@ describe('PostsEffects', () => {
       });
     });
 
-    // it('should return a GET_POSTS_FAIL action, on error', function () {
-    //   const expectedResult = getPostsFail('error');
-    //
-    //   const { postsService, postsEffects, runner } = setup();
-    //
-    //   postsService.getPosts.and.returnValue(Observable.throw('error'));
-    //   runner.queue(getPosts());
-    //
-    //   postsEffects.posts$.subscribe(result => {
-    //     expect(result).toEqual(expectedResult);
-    //   });
-    // });
+    it('should return a GET_POSTS_FAIL action, on error', function () {
+      const expectedResult = getPostsFail('error');
+
+      postsService.get.and.returnValue(Observable.throw('error'));
+      runner.queue(getPosts());
+
+      postsEffects.posts$.subscribe(result => {
+        expect(result).toEqual(expectedResult);
+      });
+    });
 
     it('should return a GET_POSTS_FAIL action, on error, after the de-bounce', fakeAsync(function () {
       const expectedResult = getPostsFail('error');
-      const { postsService, postsEffects, runner } = setup();
       let result = null;
 
-      postsService.getPosts.and.returnValue(Observable.throw('error'));
+      postsService.get.and.returnValue(Observable.throw('error'));
       runner.queue(getPosts());
 
-      postsEffects.posts$.subscribe(_result => result = _result);
+      postsEffects.get$.subscribe(_result => result = _result);
       tick(399);
       expect(result).toEqual(null);
       tick(400);
